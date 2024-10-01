@@ -9,8 +9,8 @@ public class Main {
 
         TaskManager taskManager = new TaskManager();
 
-        Task task1 = new Task("Задача 1", "Описание первого таска.");
-        Task task2 = new Task("Задача 2", "Описание второго таска.");
+        Task task1 = new Task("Задача 1", "Описание первого таска.", Statuses.NEW);
+        Task task2 = new Task("Задача 2", "Описание второго таска.", Statuses.NEW);
 
         taskManager.createTask(task1);
         taskManager.createTask(task2);
@@ -21,13 +21,13 @@ public class Main {
         taskManager.createEpic(epic1);
         taskManager.createEpic(epic2);
 
-        Subtask subtask1 = new Subtask("Сабтаск 1", "Описание первого сабтаска.");
-        Subtask subtask2 = new Subtask("Сабтаск 2", "Описание второго сабтаска.");
-        Subtask subtask3 = new Subtask("Сабтаск 3", "Описание второго сабтаска.");
+        Subtask subtask1 = new Subtask("Сабтаск 1", "Описание первого сабтаска.", 3, Statuses.NEW);
+        Subtask subtask2 = new Subtask("Сабтаск 2", "Описание второго сабтаска.", 3, Statuses.NEW);
+        Subtask subtask3 = new Subtask("Сабтаск 3", "Описание второго сабтаска.", 4, Statuses.NEW);
 
-        taskManager.createAndAddSubtask(epic1, subtask1);
-        taskManager.createAndAddSubtask(epic1, subtask2);
-        taskManager.createAndAddSubtask(epic2, subtask3);
+        taskManager.createAndAddSubtask(subtask1);
+        taskManager.createAndAddSubtask(subtask2);
+        taskManager.createAndAddSubtask(subtask3);
 
         ArrayList<Task> tasksList = taskManager.getTasks();
 
@@ -58,13 +58,13 @@ public class Main {
         taskManager.updateTask(task3);
         taskManager.updateTask(task4);
 
-        Subtask subtask4 = new Subtask("Сабтаск 1", "Описание первого сабтаска.", 4, Statuses.NEW);
-        Subtask subtask5 = new Subtask("Сабтаск 2", "Описание второго сабтаска.", 5, Statuses.DONE);
-        Subtask subtask6 = new Subtask("Сабтаск 3", "Описание второго сабтаска.", 6, Statuses.DONE);
+        Subtask subtask4 = new Subtask("Сабтаск 1", "Описание первого сабтаска.", 5, 3, Statuses.NEW);
+        Subtask subtask5 = new Subtask("Сабтаск 2", "Описание второго сабтаска.", 6, 3, Statuses.DONE);
+        Subtask subtask6 = new Subtask("Сабтаск 3", "Описание второго сабтаска.", 7, 4, Statuses.DONE);
 
-        taskManager.updateSubtask(epic1, subtask4);
-        taskManager.updateSubtask(epic1, subtask5);
-        taskManager.updateSubtask(epic2, subtask6);
+        taskManager.updateSubtask(subtask4);
+        taskManager.updateSubtask(subtask5);
+        taskManager.updateSubtask(subtask6);
 
         ArrayList<Task> tasksList2 = taskManager.getTasks();
 
@@ -89,8 +89,8 @@ public class Main {
         // 3)
         System.out.println("3) Третий этап тестировки:");
 
-        taskManager.deleteTask(task3);
-        taskManager.deleteEpic(epic2);
+        taskManager.deleteTask(1);
+        taskManager.deleteEpic(3);
 
         taskManager.printAllTasks();
     }
