@@ -55,7 +55,6 @@ public class TaskManager {
             Epic epicFromList = epics.get(epic.getIdentificationNumber());
             epicFromList.setTaskName(epic.getTaskName());
             epicFromList.setDescription(epic.getDescription());
-            epics.put(epicFromList.getIdentificationNumber(), epicFromList);
         }
     }
 
@@ -108,9 +107,7 @@ public class TaskManager {
     }
 
     public ArrayList<Epic> getEpics() {
-        ArrayList<Epic> epicsList = new ArrayList<>();
-
-        epicsList.addAll(epics.values());
+        ArrayList<Epic> epicsList = new ArrayList<>(epics.values());
 
         return epicsList;
     }
@@ -141,9 +138,7 @@ public class TaskManager {
     }
 
     public Subtask getSubtask(int subtaskId) {
-        Subtask subtask = subtasks.get(subtaskId);
-
-        return subtask;
+        return subtasks.get(subtaskId);
     }
 
     public void printAllTasks() {
@@ -208,8 +203,11 @@ public class TaskManager {
     }
 
     public void deleteAllSubtasks() {
+        subtasks.clear();
+
         for (Epic epic : epics.values()) {
             epic.deleteAllSubtasksId();
+            checkEpicStatus(epic.getIdentificationNumber());
         }
     }
 }
