@@ -1,11 +1,16 @@
+package manager;
+
+import manager.Managers;
+import manager.TaskManager;
 import org.junit.jupiter.api.*;
+import task.*;
 
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class InMemoryHistoryManagerTest {
-    private static  TaskManager<Task> taskManager;
+    private static TaskManager<Task> taskManager;
     private static Task task1;
     private static Epic epic1;
     private static Subtask subtask1;

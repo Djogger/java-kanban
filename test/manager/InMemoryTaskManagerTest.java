@@ -1,14 +1,16 @@
+package manager;
+
+import manager.*;
+
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
+import task.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class InMemoryTaskManagerTest {
-    private static  TaskManager<Task> taskManager;
+    private static TaskManager<Task> taskManager;
     private static Task task1;
     private static Task task2;
     private static Epic epic1;
