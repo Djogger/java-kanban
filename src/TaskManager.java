@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.List;
 
 public interface TaskManager<T extends Task> {
 
@@ -14,13 +14,13 @@ public interface TaskManager<T extends Task> {
 
      void updateSubtask(Subtask subtask);
 
-     ArrayList<Task> getTasks();
+     List<Task> getTasks();
 
-     ArrayList<Epic> getEpics();
+     List<Epic> getEpics();
 
-     ArrayList<Subtask> getEpicSubtasks(Epic epic);
+     List<Subtask> getEpicSubtasks(Epic epic);
 
-     ArrayList<Subtask> getSubtasks();
+     List<Subtask> getSubtasks();
 
      Task getTask(int taskId);
 
@@ -28,7 +28,7 @@ public interface TaskManager<T extends Task> {
 
      Subtask getSubtask(int subtaskId);
 
-      ArrayList<Task> getHistory();
+      List<Task> getHistory();
 
      void printAllTasks();
 

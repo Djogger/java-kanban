@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
@@ -29,19 +29,19 @@ public class Main {
         taskManager.createAndAddSubtask(subtask2);
         taskManager.createAndAddSubtask(subtask3);
 
-        ArrayList<Task> tasksList = taskManager.getTasks();
+        List<Task> tasksList = taskManager.getTasks();
 
         for (Task task : tasksList) {
             System.out.println(task);
         }
 
-        ArrayList<Epic> epicsList = taskManager.getEpics();
+        List<Epic> epicsList = taskManager.getEpics();
 
         for (Epic epic : epicsList) {
             System.out.println(epic);
         }
 
-        ArrayList<Subtask> subtasksList = taskManager.getSubtasks();
+        List<Subtask> subtasksList = taskManager.getSubtasks();
 
         for (Subtask subtask : subtasksList) {
             System.out.println(subtask);
@@ -66,19 +66,19 @@ public class Main {
         taskManager.updateSubtask(subtask5);
         taskManager.updateSubtask(subtask6);
 
-        ArrayList<Task> tasksList2 = taskManager.getTasks();
+        List<Task> tasksList2 = taskManager.getTasks();
 
         for (Task task : tasksList2) {
             System.out.println(task);
         }
 
-        ArrayList<Epic> epicsList2 = taskManager.getEpics();
+        List<Epic> epicsList2 = taskManager.getEpics();
 
         for (Epic epic : epicsList2) {
             System.out.println(epic);
         }
 
-        ArrayList<Subtask> subtasksList2 = taskManager.getSubtasks();
+        List<Subtask> subtasksList2 = taskManager.getSubtasks();
 
         for (Subtask subtask : subtasksList2) {
             System.out.println(subtask);
@@ -104,7 +104,7 @@ public class Main {
         taskManager.getSubtask(7);
         taskManager.getEpic(500);
         
-        ArrayList<Task> history = taskManager.getHistory();
+        List<Task> history = taskManager.getHistory();
         
         for (Task element : history) {
             System.out.println(element);
