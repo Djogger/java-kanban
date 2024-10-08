@@ -7,7 +7,7 @@ public class Main {
         // 1)
         System.out.println("1) Первый этап тестировки:");
 
-        TaskManager taskManager = new TaskManager();
+        TaskManager<Task> taskManager = Managers.getDefault();
 
         Task task1 = new Task("Задача 1", "Описание первого таска.", Statuses.NEW);
         Task task2 = new Task("Задача 2", "Описание второго таска.", Statuses.NEW);
@@ -93,6 +93,23 @@ public class Main {
         taskManager.deleteEpic(3);
 
         taskManager.printAllTasks();
+
+        System.out.println("\n");
+
+        // 4)
+        System.out.println("4) Четвёртый этап тестировки:");
+
+        taskManager.getTask(2);
+        taskManager.getEpic(4);
+        taskManager.getSubtask(7);
+        taskManager.getEpic(500);
+        
+        ArrayList<Task> history = taskManager.getHistory();
+        
+        for (Task element : history) {
+            System.out.println(element);
+        }
+
     }
 
 }

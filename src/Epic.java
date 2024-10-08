@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Epic extends Task {
     private ArrayList<Integer> subtasksId = new ArrayList<>();
@@ -16,7 +17,7 @@ public class Epic extends Task {
     }
 
     public void deleteSubtaskId(int id) {
-        Integer index = subtasksId.indexOf(id);
+        int index = subtasksId.indexOf(id);
         subtasksId.remove(index);
     }
 
