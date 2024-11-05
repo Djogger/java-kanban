@@ -45,4 +45,5 @@ class InMemoryHistoryManagerTest {
 
         assertEquals(tasksList, taskManager.getHistory());
     }
+
 }
