@@ -48,36 +48,3 @@ public class InMemoryHistoryManager implements HistoryManager {
         return history.getTasks();
     }
 }
-
-
-class DoublyLinkedList<Task> {
-    public Node<Task> head;
-    public Node<Task> tail;
-    private int size = 0;
-
-
-    public void linkLast(Node<Task> newNode) {
-        if (tail == null) {
-            head = newNode;
-            tail = newNode;
-        } else {
-            tail.next = newNode;
-            newNode.prev = tail;
-            tail = newNode;
-        }
-
-        size++;
-    }
-
-    public ArrayList<Task> getTasks() {
-        ArrayList<Task> tasks = new ArrayList<>();
-        Node<Task> current = head;
-
-        while (current != null) {
-            tasks.add(current.data);
-            current = current.next;
-        }
-
-        return tasks;
-    }
-}
