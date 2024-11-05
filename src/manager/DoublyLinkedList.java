@@ -3,6 +3,7 @@ package manager;
 import task.Task;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 class DoublyLinkedList<T extends Task> {
     public Node<T> head;
@@ -13,12 +14,12 @@ class DoublyLinkedList<T extends Task> {
     public void linkLast(Node<T> newNode) {
         if (tail == null) {
             head = newNode;
-            tail = newNode;
         } else {
             tail.next = newNode;
             newNode.prev = tail;
-            tail = newNode;
         }
+
+        tail = newNode;
 
         size++;
     }
@@ -34,4 +35,9 @@ class DoublyLinkedList<T extends Task> {
 
         return tasks;
     }
+
+    public void removeNode() {
+        size--;
+    }
+
 }

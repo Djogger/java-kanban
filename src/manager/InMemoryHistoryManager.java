@@ -33,13 +33,20 @@ public class InMemoryHistoryManager implements HistoryManager {
             } else {
                 history.head = nodeToRemove.next;
             }
+            if (history.head != null) {
+                history.head.prev = null;
+            }
             if (nodeToRemove.next != null) {
                 nodeToRemove.next.prev = nodeToRemove.prev;
             } else {
                 history.tail = nodeToRemove.prev;
             }
+            if (history.tail != null) {
+                history.tail.next = null;
+            }
 
             tasksIdAndNodes.remove(id);
+            history.removeNode();
         }
     }
 
