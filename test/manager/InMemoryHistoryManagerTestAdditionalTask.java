@@ -1,6 +1,7 @@
 package manager;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.*;
 import task.Epic;
 import task.Statuses;
@@ -72,7 +73,7 @@ public class InMemoryHistoryManagerTestAdditionalTask {
 
         assertEquals(0, duplicates);
     }
-    
+
     @Test
     public void shouldHaveNoIdOfDeletedTaskInHistory() {
         taskManager.deleteTask(1);

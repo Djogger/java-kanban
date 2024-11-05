@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class InMemoryHistoryManager implements HistoryManager {
-    private HashMap<Integer, Node<Task>> tasksIdAndNodes= new HashMap<>();
+    private HashMap<Integer, Node<Task>> tasksIdAndNodes = new HashMap<>();
     private DoublyLinkedList<Task> history = new DoublyLinkedList<>();
 
 

@@ -250,8 +250,9 @@ public class InMemoryTaskManager<T extends Task> implements TaskManager<T> {
     }
 
     @Override
-    public  void deleteAllTasks() {
-        tasks.clear();;
+    public void deleteAllTasks() {
+        tasks.clear();
+        ;
     }
 
     @Override
