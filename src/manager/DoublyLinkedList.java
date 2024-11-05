@@ -3,7 +3,6 @@ package manager;
 import task.Task;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 class DoublyLinkedList<T extends Task> {
     public Node<T> head;
