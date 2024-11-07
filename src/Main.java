@@ -111,9 +111,7 @@ public class Main {
         taskManager.getEpic(4);
         taskManager.getSubtask(7);
         taskManager.getEpic(500);
-        
         List<Task> history = taskManager.getHistory();
-        
         for (Task element : history) {
             System.out.println(element);
         }
