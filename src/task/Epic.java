@@ -32,14 +32,14 @@ public class Epic extends Task {
         return subtasksId;
     }
 
-    @Override
-    public String toString() {
-        return "task.Epic{" +
-                "taskName='" + super.getTaskName() + '\'' +
-                ", description='" + super.getDescription() + '\'' +
-                ", identificationNumber=" + super.getIdentificationNumber() +
-                ", subtasksId=" + subtasksId.toString() +
-                ", status=" + super.getStatus() +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "task.Epic{" +
+//                "taskName='" + super.getTaskName() + '\'' +
+//                ", description='" + super.getDescription() + '\'' +
+//                ", identificationNumber=" + super.getIdentificationNumber() +
+//                ", subtasksId=" + subtasksId.toString() +
+//                ", status=" + super.getStatus() +
+//                '}';
+//    }
 }
