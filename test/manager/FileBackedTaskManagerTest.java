@@ -48,7 +48,7 @@ public class FileBackedTaskManagerTest {
 
     @Test
     public void shouldReturn7Insertions() {
-        try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/file.txt")))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath.toFile()))) {
             int numOfInsertions = 0;
 
             reader.readLine();
