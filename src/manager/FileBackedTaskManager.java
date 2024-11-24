@@ -134,7 +134,7 @@ public class FileBackedTaskManager<T extends Task> extends InMemoryTaskManager<T
             }
         } catch (IOException ex) {
             try {
-                throw new ManagerSaveException("Ошибка работы с файлом");
+                throw new ManagerSaveException("Ошибка восстановления файла");
             } catch (ManagerSaveException e) {
                 throw new RuntimeException(e);
             }
