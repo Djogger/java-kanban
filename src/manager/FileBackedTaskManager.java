@@ -7,116 +7,143 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 public class FileBackedTaskManager<T extends Task> extends InMemoryTaskManager<T> {
-    private static final String HOME = System.getProperty("user.home");
+    private Path filePath;
 
-    public static void main(String[] args) throws IOException {
-        FileBackedTaskManager<Task> taskManager = new FileBackedTaskManager<>();
+    public static void main(String[] args) {
+//        FileBackedTaskManager<Task> taskManager = new FileBackedTaskManager<>("C:/Users/User/Desktop/Java Курс/Sprint-4/java-kanban/src/file.txt");
+//
+//        Task task1 = new Task("Задача 1", "Описание первого таска.", Statuses.NEW);
+//        Task task2 = new Task("Задача 2", "Описание второго таска.", Statuses.DONE);
+//
+//        taskManager.createTask(task1);
+//        taskManager.createTask(task2);
+//
+//        Epic epic1 = new Epic("Эпик 1", "Описание первого эпика.");
+//        Epic epic2 = new Epic("Эпик 2", "Описание второго эпика.");
+//
+//        taskManager.createEpic(epic1);
+//        taskManager.createEpic(epic2);
+//
+//        Subtask subtask1 = new Subtask("Сабтаск 1", "Описание первого сабтаска.", 3, Statuses.NEW);
+//        Subtask subtask2 = new Subtask("Сабтаск 2", "Описание второго сабтаска.", 3, Statuses.IN_PROGRESS);
+//        Subtask subtask3 = new Subtask("Сабтаск 3", "Описание третьего сабтаска.", 4, Statuses.NEW);
+//
+//        taskManager.createAndAddSubtask(subtask1);
+//        taskManager.createAndAddSubtask(subtask2);
+//        taskManager.createAndAddSubtask(subtask3);
 
-        Task task1 = new Task("Задача 1", "Описание первого таска.", Statuses.NEW);
-        Task task2 = new Task("Задача 2", "Описание второго таска.", Statuses.DONE);
+        FileBackedTaskManager<Task> taskManager = loadFromFile(new File("src/file.txt"));
 
-        taskManager.createTask(task1);
-        taskManager.createTask(task2);
+        Task task3 = new Task("Задача 3", "Описание первого таска.", Statuses.NEW);
 
-        Epic epic1 = new Epic("Эпик 1", "Описание первого эпика.");
-        Epic epic2 = new Epic("Эпик 2", "Описание второго эпика.");
+        taskManager.createTask(task3);
 
-        taskManager.createEpic(epic1);
-        taskManager.createEpic(epic2);
-
-        Subtask subtask1 = new Subtask("Сабтаск 1", "Описание первого сабтаска.", 3, Statuses.NEW);
-        Subtask subtask2 = new Subtask("Сабтаск 2", "Описание второго сабтаска.", 3, Statuses.IN_PROGRESS);
-        Subtask subtask3 = new Subtask("Сабтаск 3", "Описание третьего сабтаска.", 4, Statuses.NEW);
+        Subtask subtask1 = new Subtask("Сабтаск 4", "Описание четвёртого сабтаска.", 4, Statuses.DONE);
 
         taskManager.createAndAddSubtask(subtask1);
-        taskManager.createAndAddSubtask(subtask2);
-        taskManager.createAndAddSubtask(subtask3);
 
-//        FileBackedTaskManager<Task> taskManager = loadFromFile(new File("src/file.txt"));
-//
-//        List<Task> tasksList = taskManager.getTasks();
-//
-//        for (Task task : tasksList) {
-//            System.out.println(task);
-//        }
-//
-//        List<Epic> epicsList = taskManager.getEpics();
-//
-//        for (Epic epic : epicsList) {
-//            System.out.println(epic);
-//        }
-//
-//        List<Subtask> subtasksList = taskManager.getSubtasks();
-//
-//        for (Subtask subtask : subtasksList) {
-//            System.out.println(subtask);
-//        }
+        List<Task> tasksList = taskManager.getTasks();
+
+        for (Task task : tasksList) {
+            System.out.println(task);
+        }
+
+        List<Epic> epicsList = taskManager.getEpics();
+
+        for (Epic epic : epicsList) {
+            System.out.println(epic);
+        }
+
+        List<Subtask> subtasksList = taskManager.getSubtasks();
+
+        for (Subtask subtask : subtasksList) {
+            System.out.println(subtask);
+        }
     }
 
-    public void save() {
-        Path filePath = Paths.get(HOME, "Desktop", "Java Курс", "Sprint-4", "java-kanban", "src", "file.txt");
+    public FileBackedTaskManager(String filePath) {
+        this.filePath = Paths.get(filePath);
+    }
 
-        try {
+    private void save() {
+        try (Writer fileWriter = new FileWriter(filePath.toFile())) {
             Files.createFile(filePath);
+            writeInFile(fileWriter);
         } catch (FileAlreadyExistsException e) {
             try (Writer fileWriter = new FileWriter(filePath.toFile())) {
-                fileWriter.write("id,type,name,status,description,epic\n");
-
-                for (Task task : super.getTasks()) {
-                    fileWriter.write(task.toString() + "\n");
-                }
-
-                for (Epic epic : super.getEpics()) {
-                    fileWriter.write(epic.toString() + "\n");
-                }
-
-                for (Subtask subtask : super.getSubtasks()) {
-                    fileWriter.write(subtask.toString() + "\n");
-                }
+                writeInFile(fileWriter);
             } catch (IOException ex) {
                 try {
-                    throw new ManagerSaveException("Ошибка работы с файлом");
+                    throw new ManagerSaveException("Ошибка записи в файл");
                 } catch (ManagerSaveException exc) {
-                    System.out.println(exc.getMessage());;
+                    throw new RuntimeException(e);
                 }
             }
         } catch (IOException ex) {
             try {
                 throw new ManagerSaveException("Ошибка работы с файлом");
-            } catch (ManagerSaveException exc) {
-                System.out.println(exc.getMessage());;
+            } catch (ManagerSaveException e) {
+                throw new RuntimeException(e);
             }
         }
     }
 
+    private void writeInFile(Writer fileWriter) throws IOException {
+        fileWriter.write("id,type,name,status,description,epic\n");
+
+        for (Task task : super.getTasks()) {
+            fileWriter.write(task.toString() + "\n");
+        }
+
+        for (Epic epic : super.getEpics()) {
+            fileWriter.write(epic.toString() + "\n");
+        }
+
+        for (Subtask subtask : super.getSubtasks()) {
+            fileWriter.write(subtask.toString() + "\n");
+        }
+    }
+
     public static FileBackedTaskManager<Task> loadFromFile(File file) {
-        FileBackedTaskManager<Task> taskManager = new FileBackedTaskManager<>();
+        FileBackedTaskManager<Task> taskManager = new FileBackedTaskManager<>(file.getAbsolutePath());
 
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             reader.readLine();
 
             String line;
+
+            int biggestId = 0;
+
             while ((line = reader.readLine()) != null) {
                 Task task = taskManager.fromString(line);
 
+                if (task.getIdentificationNumber() > biggestId) {
+                    biggestId = task.getIdentificationNumber();
+                }
+
                 if (task instanceof Subtask) {
-                    taskManager.createAndAddSubtask((Subtask) task);
+                    taskManager.restoreSubtask((Subtask) task, biggestId);
                 } else if (task instanceof Epic) {
-                    taskManager.createEpic((Epic) task);
+                    taskManager.restoreEpic((Epic) task, biggestId);
                 } else if (task instanceof Task) {
-                    taskManager.createTask(task);
+                    taskManager.restoreTask(task, biggestId);
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ex) {
+            try {
+                throw new ManagerSaveException("Ошибка работы с файлом");
+            } catch (ManagerSaveException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         return taskManager;
     }
 
-    public Task fromString(String value) {
+    private Task fromString(String value) {
         String[] split = value.split(",");
 
         // Получаем тип задачи
@@ -128,9 +155,9 @@ public class FileBackedTaskManager<T extends Task> extends InMemoryTaskManager<T
         } else if (taskType.equals("class task.Subtask")) {
             return new Subtask(split[2], split[4], Integer.parseInt(split[0]), Integer.parseInt(split[5]), Statuses.valueOf(split[3]));
         } else if (taskType.equals("class task.Epic")) {
-            return new Epic(split[2], split[4], Integer.parseInt(split[0]));
+            return new Epic(split[2], split[4], Integer.parseInt(split[0]), Statuses.valueOf(split[3]));
         } else {
-            return null;
+            throw new RuntimeException("Ошибка восстановления задачи.");
         }
     }
 

@@ -1,8 +1,12 @@
 id,type,name,status,description,epic
 1,class task.Task,Задача 1,NEW,Описание первого таска.,
 2,class task.Task,Задача 2,DONE,Описание второго таска.,
+8,class task.Task,Задача 3,NEW,Описание первого таска.,
+10,class task.Task,Задача 3,NEW,Описание первого таска.,
 3,class task.Epic,Эпик 1,IN_PROGRESS,Описание первого эпика.,
-4,class task.Epic,Эпик 2,NEW,Описание второго эпика.,
+4,class task.Epic,Эпик 2,IN_PROGRESS,Описание второго эпика.,
 5,class task.Subtask,Сабтаск 1,NEW,Описание первого сабтаска.,3
 6,class task.Subtask,Сабтаск 2,IN_PROGRESS,Описание второго сабтаска.,3
 7,class task.Subtask,Сабтаск 3,NEW,Описание третьего сабтаска.,4
+9,class task.Subtask,Сабтаск 4,NEW,Описание четвёртого сабтаска.,3
+11,class task.Subtask,Сабтаск 4,DONE,Описание четвёртого сабтаска.,4

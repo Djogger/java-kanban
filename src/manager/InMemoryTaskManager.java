@@ -55,6 +55,32 @@ public class InMemoryTaskManager<T extends Task> implements TaskManager<T> {
         checkEpicStatus(epic.getIdentificationNumber());
     }
 
+    protected void restoreTask(Task task, int lastId) {
+        tasks.put(task.getIdentificationNumber(), task);
+        id = lastId + 1;
+    }
+
+    protected void restoreEpic(Epic epic, int lastId) {
+        epics.put(epic.getIdentificationNumber(), epic);
+        id = lastId + 1;
+    }
+
+    protected void restoreSubtask(Subtask subtask, int lastId) {
+        if (epics.get(subtask.getEpicId()) == null) {
+            return;
+        }
+
+        Epic epic = epics.get(subtask.getEpicId());
+
+        epic.addToSubtaskId(subtask.getIdentificationNumber());
+
+        subtasks.put(subtask.getIdentificationNumber(), subtask);
+
+        id = lastId + 1;
+
+        checkEpicStatus(epic.getIdentificationNumber());
+    }
+
     @Override
     public void updateTask(Task task) {
         if (tasks.containsKey(task.getIdentificationNumber())) {

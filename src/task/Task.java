@@ -73,13 +73,4 @@ public class Task {
         return String.format("%s,%s,%s,%s,%s,", getIdentificationNumber(), getClass(), getTaskName(), getStatus(), getDescription());
     }
 
-//    @Override
-//    public String toString() {
-//        return "Task{" +
-//                "taskName='" + taskName + '\'' +
-//                ", description='" + description + '\'' +
-//                ", identificationNumber=" + identificationNumber +
-//                ", status=" + status +
-//                '}';
-//    }
 }
