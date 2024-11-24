@@ -9,18 +9,22 @@ import task.Subtask;
 import task.Task;
 
 import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import static manager.FileBackedTaskManager.loadFromFile;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class FileBackedTaskManagerTest {
-    private static final String HOME = System.getProperty("user.home");
+    private static Path filePath;
     private static final FileBackedTaskManager<Task> taskManager = new FileBackedTaskManager<>("C:/Users/User/Desktop/Java Курс/Sprint-4/java-kanban/src/file.txt");
     private static FileBackedTaskManager<Task> taskManager2;
 
     @BeforeAll
     public static void before() {
+        filePath = Paths.get("C:/Users/User/Desktop/Java Курс/Sprint-4/java-kanban/src/file.txt");
+
         Task task1 = new Task("Задача 1", "Описание первого таска.", Statuses.NEW);
         Task task2 = new Task("Задача 2", "Описание второго таска.", Statuses.DONE);
 
@@ -66,7 +70,7 @@ public class FileBackedTaskManagerTest {
 
     @Test
     public void shouldReturnSameQuantityOfTasksFromFile() {
-        taskManager2 = loadFromFile(new File("src/file.txt"));
+        taskManager2 = loadFromFile(filePath.toFile());
 
         int numOfInsertions = 0;
 
