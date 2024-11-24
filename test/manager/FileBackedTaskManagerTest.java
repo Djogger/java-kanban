@@ -44,7 +44,7 @@ public class FileBackedTaskManagerTest {
 
     @Test
     public void shouldReturn7Insertions() {
-        try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/file.txt")))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(new File(HOME + "/Desktop/Java Курс/Sprint-4/java-kanban/src/file.txt")))) {
             int numOfInsertions = 0;
 
             reader.readLine();
@@ -66,7 +66,7 @@ public class FileBackedTaskManagerTest {
 
     @Test
     public void shouldReturnSameQuantityOfTasksFromFile() {
-        taskManager2 = loadFromFile(new File("src/file.txt"));
+        taskManager2 = loadFromFile(new File(HOME + "/Desktop/Java Курс/Sprint-4/java-kanban/src/file.txt"));
 
         int numOfInsertions = 0;
 
