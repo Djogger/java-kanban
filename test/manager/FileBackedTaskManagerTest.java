@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class FileBackedTaskManagerTest {
     private static final String HOME = System.getProperty("user.home");
-    private static final FileBackedTaskManager<Task> taskManager = new FileBackedTaskManager<>("C:/Users/User/Desktop/Java Курс/Sprint-4/java-kanban/src/file.txt");
+    private static final FileBackedTaskManager<Task> taskManager = new FileBackedTaskManager<>(HOME + "/Desktop/Java Курс/Sprint-4/java-kanban/src/file.txt");
     private static FileBackedTaskManager<Task> taskManager2;
 
     @BeforeAll
