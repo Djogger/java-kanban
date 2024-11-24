@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class FileBackedTaskManagerTest {
     private static final String HOME = System.getProperty("user.home");
-    private static final FileBackedTaskManager<Task> taskManager = new FileBackedTaskManager<>(HOME + "/Desktop/Java Курс/Sprint-4/java-kanban/src/file.txt");
+    private static final FileBackedTaskManager<Task> taskManager = new FileBackedTaskManager<>("file.txt");
     private static FileBackedTaskManager<Task> taskManager2;
 
     @BeforeAll
@@ -44,7 +44,7 @@ public class FileBackedTaskManagerTest {
 
     @Test
     public void shouldReturn7Insertions() {
-        try (BufferedReader reader = new BufferedReader(new FileReader(new File(HOME + "/Desktop/Java Курс/Sprint-4/java-kanban/src/file.txt")))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(new File("file.txt")))) {
             int numOfInsertions = 0;
 
             reader.readLine();
@@ -66,7 +66,7 @@ public class FileBackedTaskManagerTest {
 
     @Test
     public void shouldReturnSameQuantityOfTasksFromFile() {
-        taskManager2 = loadFromFile(new File(HOME + "/Desktop/Java Курс/Sprint-4/java-kanban/src/file.txt"));
+        taskManager2 = loadFromFile(new File("file.txt"));
 
         int numOfInsertions = 0;
 
