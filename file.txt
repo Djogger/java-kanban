@@ -1,0 +1,1 @@
+id,type,name,status,description,epic1,class task.Task,Задача 1,NEW,Описание первого таска.,2,class task.Task,Задача 2,NEW,Описание второго таска.,3,class task.Epic,Эпик 1,NEW,Описание первого эпика.,4,class task.Epic,Эпик 2,NEW,Описание второго эпика.,5,class task.Subtask,Сабтаск 1,NEW,Описание первого сабтаска.,36,class task.Subtask,Сабтаск 2,NEW,Описание втор

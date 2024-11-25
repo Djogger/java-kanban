@@ -70,11 +70,7 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Task{" +
-                "taskName='" + taskName + '\'' +
-                ", description='" + description + '\'' +
-                ", identificationNumber=" + identificationNumber +
-                ", status=" + status +
-                '}';
+        return String.format("%s,%s,%s,%s,%s,", getIdentificationNumber(), getClass(), getTaskName(), getStatus(), getDescription());
     }
+
 }
