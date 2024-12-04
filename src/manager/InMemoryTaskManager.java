@@ -26,7 +26,7 @@ public class InMemoryTaskManager<T extends Task> implements TaskManager<T> {
     @Override
     public void createTask(Task task) {
         boolean hasOverlap = prioritizedTasks.stream()
-                        .anyMatch(taskFromList -> isOverlapping(taskFromList, task));
+                .anyMatch(taskFromList -> isOverlapping(taskFromList, task));
 
         if (hasOverlap) {
             throw new IllegalArgumentException("Задача пересекается с существующей задачей.");
@@ -323,15 +323,18 @@ public class InMemoryTaskManager<T extends Task> implements TaskManager<T> {
     public void printAllTasks() {
         getTasks().stream()
                 .peek(System.out::println)
-                .forEach(task -> {});
+                .forEach(task -> {
+                });
 
         getEpics().stream()
                 .peek(System.out::println)
-                .forEach(task -> {});
+                .forEach(task -> {
+                });
 
         getSubtasks().stream()
                 .peek(System.out::println)
-                .forEach(task -> {});
+                .forEach(task -> {
+                });
     }
 
     @Override
