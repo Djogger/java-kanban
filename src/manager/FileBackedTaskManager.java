@@ -84,7 +84,7 @@ public class FileBackedTaskManager<T extends Task> extends InMemoryTaskManager<T
         System.out.println("\n" + "-".repeat(100) + "\n");
 
         TreeSet<Task> prioritizedTasksList = taskManager.getPrioritizedTasks();
-        
+
         for (Task task : prioritizedTasksList) {
             System.out.println("task = " + task);
         }
