@@ -37,7 +37,11 @@ public class Subtask extends Task {
 
     @Override
     public String toString() {
-        return String.format("%s,%s,%s,%s,%s,%s,%s,%s,%s", getIdentificationNumber(), getClass(), getTaskName(), getStatus(), getDescription(), getEpicId(), getStartTime().format(DateTimeFormatter.ofPattern("HH:mm dd:MM:yy")), getDuration().toMinutes(), getEndTime().format(DateTimeFormatter.ofPattern("HH:mm dd:MM:yy")));
+        if (getStartTime() != null && getDuration() != null && getEndTime() != null) {
+            return String.format("%s,%s,%s,%s,%s,%s,%s,%s,%s", getIdentificationNumber(), getClass(), getTaskName(), getStatus(), getDescription(), getEpicId(), getStartTime().format(DateTimeFormatter.ofPattern("HH:mm dd:MM:yy")), getDuration().toMinutes(), getEndTime().format(DateTimeFormatter.ofPattern("HH:mm dd:MM:yy")));
+        } else {
+            return String.format("%s,%s,%s,%s,%s,%s", getIdentificationNumber(), getClass(), getTaskName(), getStatus(), getDescription(), getEpicId());
+        }
     }
 
 }

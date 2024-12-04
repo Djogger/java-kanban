@@ -11,17 +11,17 @@ public class Epic extends Task {
 
     public Epic(String taskName, String description) {
         super(taskName, description, Statuses.NEW);
-        this.endTime = LocalDateTime.now();
+        this.endTime = null;
     }
 
     public Epic(String taskName, String description, int identificationNumber) {
         super(taskName, description, identificationNumber, Statuses.NEW);
-        this.endTime = LocalDateTime.now();
+        this.endTime = null;
     }
 
     public Epic(String taskName, String description, int identificationNumber, Statuses status) {
         super(taskName, description, identificationNumber, status);
-        this.endTime = LocalDateTime.now();
+        this.endTime = null;
     }
 
     public void addToSubtaskId(int subtaskId) {
@@ -48,11 +48,6 @@ public class Epic extends Task {
     @Override
     public LocalDateTime getEndTime() {
         return endTime;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("%s,%s,%s,%s,%s,%s,%s,%s", getIdentificationNumber(), getClass(), getTaskName(), getStatus(), getDescription(), getStartTime().format(DateTimeFormatter.ofPattern("HH:mm dd:MM:yy")), getDuration().toMinutes(), getEndTime().format(DateTimeFormatter.ofPattern("HH:mm dd:MM:yy")));
     }
 
 }

@@ -19,8 +19,8 @@ public class Task implements Comparable<Task> {
         this.description = description;
         this.identificationNumber = 0;
         this.status = status;
-        this.startTime = LocalDateTime.now();
-        this.duration = Duration.ofMinutes(0);
+        this.startTime = null;
+        this.duration = null;
     }
 
     public Task(String taskName, String description, int identificationNumber, Statuses status) {
@@ -28,8 +28,8 @@ public class Task implements Comparable<Task> {
         this.description = description;
         this.identificationNumber = identificationNumber;
         this.status = status;
-        this.startTime = LocalDateTime.now();
-        this.duration = Duration.ofMinutes(0);
+        this.startTime = null;
+        this.duration = null;
     }
 
     public Task(String taskName, String description, Statuses status, LocalDateTime startTime, Duration duration) {
@@ -99,7 +99,11 @@ public class Task implements Comparable<Task> {
     }
 
     public LocalDateTime getEndTime() {
-        return startTime.plusMinutes(duration.toMinutes());
+        if (startTime != null) {
+            return startTime.plusMinutes(duration.toMinutes());
+        }
+
+        return null;
     }
 
     @Override
@@ -117,7 +121,11 @@ public class Task implements Comparable<Task> {
 
     @Override
     public String toString() {
-        return String.format("%s,%s,%s,%s,%s,%s,%s,%s", getIdentificationNumber(), getClass(), getTaskName(), getStatus(), getDescription(), getStartTime().format(DateTimeFormatter.ofPattern("HH:mm dd:MM:yy")), getDuration().toMinutes(), getEndTime().format(DateTimeFormatter.ofPattern("HH:mm dd:MM:yy")));
+        if (getStartTime() != null && getDuration() != null && getEndTime() != null) {
+            return String.format("%s,%s,%s,%s,%s,%s,%s,%s", getIdentificationNumber(), getClass(), getTaskName(), getStatus(), getDescription(), getStartTime().format(DateTimeFormatter.ofPattern("HH:mm dd:MM:yy")), getDuration().toMinutes(), getEndTime().format(DateTimeFormatter.ofPattern("HH:mm dd:MM:yy")));
+        } else {
+            return String.format("%s,%s,%s,%s,%s", getIdentificationNumber(), getClass(), getTaskName(), getStatus(), getDescription());
+        }
     }
 
     @Override
