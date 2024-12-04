@@ -1,12 +1,17 @@
 package task;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
-public class Task {
+public class Task implements Comparable<Task> {
     private String taskName;
     private String description;
     private int identificationNumber;
     private Statuses status;
+    private LocalDateTime startTime;
+    private Duration duration;
 
 
     public Task(String taskName, String description, Statuses status) {
@@ -14,6 +19,8 @@ public class Task {
         this.description = description;
         this.identificationNumber = 0;
         this.status = status;
+        this.startTime = LocalDateTime.now();
+        this.duration = Duration.ofMinutes(0);
     }
 
     public Task(String taskName, String description, int identificationNumber, Statuses status) {
@@ -21,6 +28,26 @@ public class Task {
         this.description = description;
         this.identificationNumber = identificationNumber;
         this.status = status;
+        this.startTime = LocalDateTime.now();
+        this.duration = Duration.ofMinutes(0);
+    }
+
+    public Task(String taskName, String description, Statuses status, LocalDateTime startTime, Duration duration) {
+        this.taskName = taskName;
+        this.description = description;
+        this.identificationNumber = 0;
+        this.status = status;
+        this.startTime = startTime;
+        this.duration = duration;
+    }
+
+    public Task(String taskName, String description, int identificationNumber, Statuses status, LocalDateTime startTime, Duration duration) {
+        this.taskName = taskName;
+        this.description = description;
+        this.identificationNumber = identificationNumber;
+        this.status = status;
+        this.startTime = startTime;
+        this.duration = duration;
     }
 
     public void setIdentificationNumber(int identificationNumber) {
@@ -39,6 +66,14 @@ public class Task {
         this.status = status;
     }
 
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
+
     public String getTaskName() {
         return taskName;
     }
@@ -53,6 +88,18 @@ public class Task {
 
     public Statuses getStatus() {
         return status;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public Duration getDuration() {
+        return duration;
+    }
+
+    public LocalDateTime getEndTime() {
+        return startTime.plusMinutes(duration.toMinutes());
     }
 
     @Override
@@ -70,7 +117,12 @@ public class Task {
 
     @Override
     public String toString() {
-        return String.format("%s,%s,%s,%s,%s,", getIdentificationNumber(), getClass(), getTaskName(), getStatus(), getDescription());
+        return String.format("%s,%s,%s,%s,%s,%s,%s,%s", getIdentificationNumber(), getClass(), getTaskName(), getStatus(), getDescription(), getStartTime().format(DateTimeFormatter.ofPattern("HH:mm dd:MM:yy")), getDuration().toMinutes(), getEndTime().format(DateTimeFormatter.ofPattern("HH:mm dd:MM:yy")));
+    }
+
+    @Override
+    public int compareTo(Task other) {
+        return this.startTime.compareTo(other.startTime);
     }
 
 }
