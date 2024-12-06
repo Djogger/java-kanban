@@ -1,10 +1,9 @@
-id,type,name,status,description,epic
-1,class task.Task,Задача 1,NEW,Описание первого таска.,
-2,class task.Task,Задача 2,DONE,Описание второго таска.,
-8,class task.Task,Задача 3,NEW,Описание первого таска.,
-3,class task.Epic,Эпик 1,IN_PROGRESS,Описание первого эпика.,
-4,class task.Epic,Эпик 2,IN_PROGRESS,Описание второго эпика.,
-5,class task.Subtask,Сабтаск 1,NEW,Описание первого сабтаска.,3
-6,class task.Subtask,Сабтаск 2,IN_PROGRESS,Описание второго сабтаска.,3
-7,class task.Subtask,Сабтаск 3,NEW,Описание третьего сабтаска.,4
-9,class task.Subtask,Сабтаск 4,DONE,Описание четвёртого сабтаска.,4
+id,type,name,status,description,epic,startTime,duration,endTime
+1,class task.Task,Задача 1,NEW,Описание первого таска.,04:23 04:12:24,65,05:28 04:12:24
+2,class task.Task,Задача 2,DONE,Описание второго таска.,18:45 04:12:24,21,19:06 04:12:24
+3,class task.Epic,Эпик 1,IN_PROGRESS,Описание первого эпика.,14:05 05:12:24,742,05:42 06:12:24
+4,class task.Epic,Эпик 2,IN_PROGRESS,Описание второго эпика.,05:05 09:12:24,42,20:26 15:12:24
+5,class task.Subtask,Сабтаск 1,NEW,Описание первого сабтаска.,3,05:21 06:12:24,21,05:42 06:12:24
+6,class task.Subtask,Сабтаск 2,IN_PROGRESS,Описание второго сабтаска.,3,14:05 05:12:24,721,02:06 06:12:24
+7,class task.Subtask,Сабтаск 3,NEW,Описание третьего сабтаска.,4,05:05 09:12:24,21,05:26 09:12:24
+8,class task.Subtask,Сабтаск 4,DONE,Описание четвёртого сабтаска.,4,20:05 15:12:24,21,20:26 15:12:24
