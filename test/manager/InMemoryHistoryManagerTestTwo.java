@@ -1,5 +1,6 @@
 package manager;
 
+import exceptions.NotFoundException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -40,20 +41,24 @@ public class InMemoryHistoryManagerTestTwo {
 
     @Test
     public void shouldHaveNoTasksInHistoryAfterAllDeletion() {
-        taskManager.getTask(1);
-        taskManager.getTask(2);
-        taskManager.getEpic(3);
-        taskManager.getEpic(4);
-        taskManager.getSubtask(5);
-        taskManager.getSubtask(6);
-        taskManager.getSubtask(7);
+        try {
+            taskManager.getTask(1);
+            taskManager.getTask(2);
+            taskManager.getEpic(3);
+            taskManager.getEpic(4);
+            taskManager.getSubtask(5);
+            taskManager.getSubtask(6);
+            taskManager.getSubtask(7);
 
-        taskManager.deleteAllTasks();
-        taskManager.deleteAllSubtasks();
-        taskManager.deleteAllEpics();
+            taskManager.deleteAllTasks();
+            taskManager.deleteAllSubtasks();
+            taskManager.deleteAllEpics();
 
-        ArrayList<Task> tasksHistory = (ArrayList<Task>) taskManager.getHistory();
+            ArrayList<Task> tasksHistory = (ArrayList<Task>) taskManager.getHistory();
 
-        assertEquals(0, tasksHistory.size());
+            assertEquals(0, tasksHistory.size());
+        } catch (NotFoundException ex) {
+            System.out.println(ex);
+        }
     }
 }

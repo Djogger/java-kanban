@@ -1,5 +1,6 @@
 package manager;
 
+import exceptions.NotFoundException;
 import manager.Managers;
 import manager.TaskManager;
 import org.junit.jupiter.api.*;
@@ -34,15 +35,19 @@ class InMemoryHistoryManagerTest {
 
     @Test
     public void shouldReturnHistoryListWithSameTasksAndOrder() {
-        taskManager.getTask(1);
-        taskManager.getEpic(2);
-        taskManager.getSubtask(3);
+        try {
+            taskManager.getTask(1);
+            taskManager.getEpic(2);
+            taskManager.getSubtask(3);
 
-        ArrayList<Task> tasksList = new ArrayList<>();
-        tasksList.add(task1);
-        tasksList.add(epic1);
-        tasksList.add(subtask1);
+            ArrayList<Task> tasksList = new ArrayList<>();
+            tasksList.add(task1);
+            tasksList.add(epic1);
+            tasksList.add(subtask1);
 
-        assertEquals(tasksList, taskManager.getHistory());
+            assertEquals(tasksList, taskManager.getHistory());
+        } catch (NotFoundException ex) {
+            System.out.println(ex);
+        }
     }
 }

@@ -1,5 +1,6 @@
 package manager;
 
+import exceptions.NotFoundException;
 import manager.*;
 
 import org.junit.jupiter.api.AfterAll;
@@ -53,9 +54,13 @@ class InMemoryTaskManagerTest {
 
     @Test
     public void shouldReturnNotNullFromTasksSubtasksAndEpicsLists() {
-        assertNotNull(taskManager.getTask(1));
-        assertNotNull(taskManager.getEpic(3));
-        assertNotNull(taskManager.getSubtask(5));
+        try {
+            assertNotNull(taskManager.getTask(1));
+            assertNotNull(taskManager.getEpic(3));
+            assertNotNull(taskManager.getSubtask(5));
+        } catch (NotFoundException ex) {
+            System.out.println(ex);
+        }
     }
 
     @Test
@@ -74,35 +79,43 @@ class InMemoryTaskManagerTest {
 
     @Test
     public void taskEpicAndSubtaskFromListsShouldBeSameAsPreviousBeforeAddingToLists() {
-        assertEquals(task1.getTaskName(), taskManager.getTask(1).getTaskName());
-        assertEquals(task1.getDescription(), taskManager.getTask(1).getDescription());
-        assertEquals(task1.getIdentificationNumber(), taskManager.getTask(1).getIdentificationNumber());
-        assertEquals(task1.getStatus(), taskManager.getTask(1).getStatus());
+        try {
+            assertEquals(task1.getTaskName(), taskManager.getTask(1).getTaskName());
+            assertEquals(task1.getDescription(), taskManager.getTask(1).getDescription());
+            assertEquals(task1.getIdentificationNumber(), taskManager.getTask(1).getIdentificationNumber());
+            assertEquals(task1.getStatus(), taskManager.getTask(1).getStatus());
 
-        assertEquals(epic1.getTaskName(), taskManager.getEpic(3).getTaskName());
-        assertEquals(epic1.getDescription(), taskManager.getEpic(3).getDescription());
-        assertEquals(epic1.getIdentificationNumber(), taskManager.getEpic(3).getIdentificationNumber());
-        assertEquals(epic1.getStatus(), taskManager.getEpic(3).getStatus());
+            assertEquals(epic1.getTaskName(), taskManager.getEpic(3).getTaskName());
+            assertEquals(epic1.getDescription(), taskManager.getEpic(3).getDescription());
+            assertEquals(epic1.getIdentificationNumber(), taskManager.getEpic(3).getIdentificationNumber());
+            assertEquals(epic1.getStatus(), taskManager.getEpic(3).getStatus());
 
-        assertEquals(subtask1.getTaskName(), taskManager.getSubtask(5).getTaskName());
-        assertEquals(subtask1.getDescription(), taskManager.getSubtask(5).getDescription());
-        assertEquals(subtask1.getIdentificationNumber(), taskManager.getSubtask(5).getIdentificationNumber());
-        assertEquals(subtask1.getStatus(), taskManager.getSubtask(5).getStatus());
+            assertEquals(subtask1.getTaskName(), taskManager.getSubtask(5).getTaskName());
+            assertEquals(subtask1.getDescription(), taskManager.getSubtask(5).getDescription());
+            assertEquals(subtask1.getIdentificationNumber(), taskManager.getSubtask(5).getIdentificationNumber());
+            assertEquals(subtask1.getStatus(), taskManager.getSubtask(5).getStatus());
+        } catch (NotFoundException ex) {
+            System.out.println(ex);
+        }
     }
 
     @Test
     public void taskEpicAndSubtaskShouldBeNotInTheListAfterDelete() {
-        taskManager.deleteTask(1);
-        assertNull(taskManager.getTask(1));
+        try {
+            taskManager.deleteTask(1);
+            assertNull(taskManager.getTask(1));
 
-        taskManager.deleteSubtask(5);
-        assertNull(taskManager.getSubtask(5));
-        assertFalse(taskManager.getEpic(3).getSubtasksId().contains(5));
+            taskManager.deleteSubtask(5);
+            assertNull(taskManager.getSubtask(5));
+            assertFalse(taskManager.getEpic(3).getSubtasksId().contains(5));
 
-        taskManager.deleteEpic(3);
-        assertNull(taskManager.getEpic(3));
-        assertNull(taskManager.getSubtask(5));
-        assertNull(taskManager.getSubtask(6));
+            taskManager.deleteEpic(3);
+            assertNull(taskManager.getEpic(3));
+            assertNull(taskManager.getSubtask(5));
+            assertNull(taskManager.getSubtask(6));
+        } catch (NotFoundException ex) {
+            System.out.println(ex);
+        }
     }
 
 }

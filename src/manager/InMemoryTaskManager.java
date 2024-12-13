@@ -1,5 +1,6 @@
 package manager;
 
+import exceptions.NotFoundException;
 import task.Epic;
 import task.Statuses;
 import task.Subtask;
@@ -305,34 +306,40 @@ public class InMemoryTaskManager<T extends Task> implements TaskManager<T> {
     }
 
     @Override
-    public Task getTask(int taskId) {
+    public Task getTask(int taskId) throws NotFoundException {
         Task task = tasks.get(taskId);
 
-        if (task != null) {
-            historyManager.add(task);
+        if (task == null) {
+            throw new NotFoundException("Задача с id: " + taskId + " не найдена.");
         }
+
+        historyManager.add(task);
 
         return task;
     }
 
     @Override
-    public Epic getEpic(int epicId) {
+    public Epic getEpic(int epicId) throws NotFoundException {
         Epic epic = epics.get(epicId);
 
-        if (epic != null) {
-            historyManager.add(epic);
+        if (epic == null) {
+            throw new NotFoundException("Эпик с id: " + epicId + " не найдена.");
         }
+
+        historyManager.add(epic);
 
         return epic;
     }
 
     @Override
-    public Subtask getSubtask(int subtaskId) {
+    public Subtask getSubtask(int subtaskId) throws NotFoundException {
         Subtask subtask = subtasks.get(subtaskId);
 
-        if (subtask != null) {
-            historyManager.add(subtask);
+        if (subtask == null) {
+            throw new NotFoundException("Подзадача с id: " + subtaskId + " не найдена.");
         }
+
+        historyManager.add(subtask);
 
         return subtask;
     }
@@ -342,6 +349,7 @@ public class InMemoryTaskManager<T extends Task> implements TaskManager<T> {
         return (ArrayList<Task>) historyManager.getHistory();
     }
 
+    @Override
     public TreeSet<Task> getPrioritizedTasks() {
         return prioritizedTasks;
     }
