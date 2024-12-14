@@ -40,6 +40,8 @@ public interface TaskManager<T extends Task> {
 
     TreeSet<Task> getPrioritizedTasks();
 
+    int getIdOfLastCreatedTask();
+
     void printAllTasks();
 
     void deleteTask(int taskId);

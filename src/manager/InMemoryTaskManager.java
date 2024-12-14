@@ -355,6 +355,11 @@ public class InMemoryTaskManager<T extends Task> implements TaskManager<T> {
     }
 
     @Override
+    public int getIdOfLastCreatedTask() {
+        return id - 1;
+    }
+
+    @Override
     public void printAllTasks() {
         getTasks().stream()
                 .peek(System.out::println)

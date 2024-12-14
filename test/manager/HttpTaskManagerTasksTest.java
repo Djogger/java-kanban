@@ -1,7 +1,6 @@
 package manager;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import exceptions.NotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -82,6 +81,8 @@ public class HttpTaskManagerTasksTest {
         String taskJson3 = gson.toJson(epic);
         String taskJson4 = gson.toJson(subtask1);
         String taskJson5 = gson.toJson(subtask2);
+
+        System.out.println(taskJson4);
 
         HttpClient client = HttpClient.newHttpClient();
         URI url1 = URI.create("http://localhost:8050/tasks");
@@ -205,5 +206,46 @@ public class HttpTaskManagerTasksTest {
         assertEquals("[2,class task.Task,Test 2,NEW,Testing task 2,05:05 30:11:04,5,05:10 30:11:04, " +
                 "1,class task.Task,Test 1,NEW,Testing task 1,05:05 05:12:04,5,05:10 05:12:04, " +
                 "3,class task.Task,Test 3,NEW,Testing task 3,05:05 26:12:04,5,05:10 26:12:04]", manager.getPrioritizedTasks().toString().trim());
+    }
+
+    @Test
+    public void shouldReturnEpicsSubtasks() throws IOException, InterruptedException {
+        Epic epic = new Epic("Epic 1", "Epic description 1");
+        Subtask subtask1 = new Subtask("Subtask 1", "Testing subtask 1", 1, Statuses.DONE);
+        Subtask subtask2 = new Subtask("Subtask 2", "Testing subtask 2", 1, Statuses.DONE);
+
+        String taskJson3 = gson.toJson(epic);
+        String taskJson4 = gson.toJson(subtask1);
+        String taskJson5 = gson.toJson(subtask2);
+
+        System.out.println(taskJson4);
+
+        HttpClient client = HttpClient.newHttpClient();
+        URI url2 = URI.create("http://localhost:8050/subtasks");
+        URI url3 = URI.create("http://localhost:8050/epics");
+
+        HttpRequest request3 = HttpRequest.newBuilder().uri(url3).POST(HttpRequest.BodyPublishers.ofString(taskJson3)).build();
+        HttpRequest request4 = HttpRequest.newBuilder().uri(url2).POST(HttpRequest.BodyPublishers.ofString(taskJson4)).build();
+        HttpRequest request5 = HttpRequest.newBuilder().uri(url2).POST(HttpRequest.BodyPublishers.ofString(taskJson5)).build();
+
+        HttpResponse<String> response3 = client.send(request3, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> response4 = client.send(request4, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> response5 = client.send(request5, HttpResponse.BodyHandlers.ofString());
+
+        assertEquals(200, response3.statusCode());
+        assertEquals(200, response4.statusCode());
+        assertEquals(200, response5.statusCode());
+
+        URI url4 = URI.create("http://localhost:8050/epics/1/subtasks");
+
+        HttpRequest request6 = HttpRequest.newBuilder().uri(url4).GET().build();
+
+        HttpResponse<String> response6 = client.send(request6, HttpResponse.BodyHandlers.ofString());
+
+        assertEquals(200, response6.statusCode());
+        assertEquals("[{\"epicId\":1,\"taskName\":\"Subtask 1\",\"description\":\"Testing subtask 1\"," +
+                "\"identificationNumber\":2,\"status\":\"DONE\"}," +
+                "{\"epicId\":1,\"taskName\":\"Subtask 2\",\"description\":\"Testing subtask 2\"," +
+                "\"identificationNumber\":3,\"status\":\"DONE\"}]", response6.body());
     }
 }

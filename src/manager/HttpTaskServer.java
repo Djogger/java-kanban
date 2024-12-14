@@ -35,6 +35,8 @@ public class HttpTaskServer {
     public static void main(String[] args) throws IOException {
         HttpServer httpServer = HttpServer.create();
 
+        manager = Managers.getDefault();
+
         httpServer.bind(new InetSocketAddress(8050), 0);
         httpServer.createContext("/tasks", new TaskHandler(manager));
         httpServer.createContext("/epics", new EpicHandler(manager));

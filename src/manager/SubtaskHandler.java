@@ -1,5 +1,6 @@
 package manager;
 
+import com.google.gson.JsonObject;
 import com.sun.net.httpserver.HttpExchange;
 import exceptions.NotFoundException;
 import task.Subtask;
@@ -17,24 +18,24 @@ public class SubtaskHandler extends TaskHandler {
 
     @Override
     protected String handlePostRequest(HttpExchange httpExchange) throws IOException {
-        String path = httpExchange.getRequestURI().getPath();
-        String[] splitPath = path.split("/");
-
         InputStream inputStream = httpExchange.getRequestBody();
         String body = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
 
         Subtask subtask = super.gson.fromJson(body, Subtask.class);
 
-        try {
-            if (splitPath.length >= 3) {
-                taskManager.updateSubtask(subtask);
+        JsonObject jsonObject = super.gson.fromJson(body, JsonObject.class);
 
-                return "Задача обновлена";
+        try {
+            int identificationNumber = jsonObject.has("identificationNumber") ?
+                    jsonObject.get("identificationNumber").getAsInt() : 0;
+
+            if (identificationNumber != 0) {
+                taskManager.updateSubtask(subtask);
+                return "Сабтаск обновлён";
             }
 
             taskManager.createAndAddSubtask(subtask);
-
-            return "Задача создана";
+            return "Сабтаск создан с id: " + taskManager.getIdOfLastCreatedTask();
         } catch (IllegalArgumentException ex) {
             return "error";
         }
@@ -57,7 +58,7 @@ public class SubtaskHandler extends TaskHandler {
             }
         }
 
-        List<? extends Task> listOfTasks = taskManager.getEpics();
+        List<? extends Task> listOfTasks = taskManager.getSubtasks();
 
         return gson.toJson(listOfTasks);
     }

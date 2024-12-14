@@ -1,5 +1,6 @@
 package manager;
 
+import com.google.gson.JsonObject;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import exceptions.NotFoundException;
@@ -47,24 +48,24 @@ public class TaskHandler extends BaseHttpHandler implements HttpHandler {
     }
 
     protected String handlePostRequest(HttpExchange httpExchange) throws IOException {
-        String path = httpExchange.getRequestURI().getPath();
-        String[] splitPath = path.split("/");
-
         InputStream inputStream = httpExchange.getRequestBody();
         String body = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
 
         Task task = gson.fromJson(body, Task.class);
 
-        try {
-            if (splitPath.length >= 3) {
-                taskManager.updateTask(task);
+        JsonObject jsonObject = super.gson.fromJson(body, JsonObject.class);
 
+        try {
+            int identificationNumber = jsonObject.has("identificationNumber") ?
+                    jsonObject.get("identificationNumber").getAsInt() : 0;
+
+            if (identificationNumber != 0) {
+                taskManager.updateTask(task);
                 return "Задача обновлена";
             }
 
             taskManager.createTask(task);
-
-            return "Задача создана";
+            return "Задача создана с id: " + taskManager.getIdOfLastCreatedTask();
         } catch (IllegalArgumentException ex) {
             return "error";
         }

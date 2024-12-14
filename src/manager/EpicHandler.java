@@ -1,5 +1,6 @@
 package manager;
 
+import com.google.gson.JsonObject;
 import com.sun.net.httpserver.HttpExchange;
 import exceptions.NotFoundException;
 import task.Epic;
@@ -17,24 +18,24 @@ public class EpicHandler extends TaskHandler {
 
     @Override
     protected String handlePostRequest(HttpExchange httpExchange) throws IOException {
-        String path = httpExchange.getRequestURI().getPath();
-        String[] splitPath = path.split("/");
-
         InputStream inputStream = httpExchange.getRequestBody();
         String body = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
 
         Epic epic = super.gson.fromJson(body, Epic.class);
 
-        try {
-            if (splitPath.length >= 3) {
-                taskManager.updateEpic(epic);
+        JsonObject jsonObject = super.gson.fromJson(body, JsonObject.class);
 
-                return "Задача обновлена";
+        try {
+            int identificationNumber = jsonObject.has("identificationNumber") ?
+                    jsonObject.get("identificationNumber").getAsInt() : 0;
+
+            if (identificationNumber != 0) {
+                taskManager.updateEpic(epic);
+                return "Эпик обновлён";
             }
 
             taskManager.createEpic(epic);
-
-            return "Задача создана";
+            return "Эпик создан c id: " + taskManager.getIdOfLastCreatedTask();
         } catch (IllegalArgumentException ex) {
             return "error";
         }
@@ -45,16 +46,18 @@ public class EpicHandler extends TaskHandler {
         String path = httpExchange.getRequestURI().getPath();
         String[] splitPath = path.split("/");
 
-        if (splitPath.length > 2) {
-            try {
-                String id = splitPath[2];
+        String id = splitPath[2];
 
-                Epic epic = taskManager.getEpic(Integer.parseInt(id));
+        try {
+            Epic epic = taskManager.getEpic(Integer.parseInt(id));
 
+            if (splitPath.length == 4) {
+                return super.gson.toJson(taskManager.getEpicSubtasks(epic));
+            } else if (splitPath.length == 3) {
                 return super.gson.toJson(epic);
-            } catch (NotFoundException ex) {
-                return "null";
             }
+        } catch (NotFoundException ex) {
+            return "null";
         }
 
         List<? extends Task> listOfTasks = taskManager.getEpics();

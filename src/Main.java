@@ -116,7 +116,7 @@ public class Main {
             taskManager.getTask(2);
             taskManager.getEpic(4);
             taskManager.getSubtask(7);
-            taskManager.getEpic(500);
+            //taskManager.getEpic(500);
             List<? extends Task> history = taskManager.getHistory();
             for (Task element : history) {
                 System.out.println(element);
@@ -129,6 +129,7 @@ public class Main {
                     .create();
 
             System.out.println(gson.toJson(task1));
+            System.out.println(gson.toJson(subtask1));
         } catch (NotFoundException ex) {
             System.out.println(ex);
         }
