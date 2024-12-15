@@ -1,5 +1,6 @@
 package manager;
 
+import exceptions.NotFoundException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,15 +32,19 @@ public class sprint8TestHistoryManager {
 
     @Test
     public void shouldHaveNoDuplication() {
-        Task task = new Task("Задача 1", "Описание первого таска.", Statuses.NEW);
+        try {
+            Task task = new Task("Задача 1", "Описание первого таска.", Statuses.NEW);
 
-        taskManager.createTask(task);
+            taskManager.createTask(task);
 
-        taskManager.getTask(task.getIdentificationNumber());
-        taskManager.getTask(task.getIdentificationNumber());
+            taskManager.getTask(task.getIdentificationNumber());
+            taskManager.getTask(task.getIdentificationNumber());
 
-        assertEquals(taskManager.getHistory().get(0), task);
-        assertEquals(taskManager.getHistory().size(), 1);
+            assertEquals(taskManager.getHistory().get(0), task);
+            assertEquals(taskManager.getHistory().size(), 1);
+        } catch (NotFoundException ex) {
+            System.out.println(ex);
+        }
     }
 
     @Test
@@ -56,11 +61,15 @@ public class sprint8TestHistoryManager {
         taskManager.createTask(task4);
         taskManager.createTask(task5);
 
-        taskManager.getTask(task1.getIdentificationNumber());
-        taskManager.getTask(task2.getIdentificationNumber());
-        taskManager.getTask(task3.getIdentificationNumber());
-        taskManager.getTask(task4.getIdentificationNumber());
-        taskManager.getTask(task5.getIdentificationNumber());
+        try {
+            taskManager.getTask(task1.getIdentificationNumber());
+            taskManager.getTask(task2.getIdentificationNumber());
+            taskManager.getTask(task3.getIdentificationNumber());
+            taskManager.getTask(task4.getIdentificationNumber());
+            taskManager.getTask(task5.getIdentificationNumber());
+        } catch (NotFoundException ex) {
+            System.out.println(ex);
+        }
 
         taskManager.deleteTask(task1.getIdentificationNumber());
         taskManager.deleteTask(task5.getIdentificationNumber());

@@ -2,6 +2,7 @@ package manager;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import exceptions.NotFoundException;
 import org.junit.jupiter.api.*;
 import task.Epic;
 import task.Statuses;
@@ -43,35 +44,39 @@ public class InMemoryHistoryManagerTestAdditionalTask {
 
     @Test
     public void shouldHaveNoDuplicatesInHistory() {
-        taskManager.getTask(1);
-        taskManager.getTask(2);
-        taskManager.getTask(1);
+        try {
+            taskManager.getTask(1);
+            taskManager.getTask(2);
+            taskManager.getTask(1);
 
-        taskManager.getSubtask(5);
-        taskManager.getSubtask(4);
-        taskManager.getSubtask(5);
+            taskManager.getSubtask(5);
+            taskManager.getSubtask(4);
+            taskManager.getSubtask(5);
 
-        taskManager.getEpic(3);
+            taskManager.getEpic(3);
 
-        int duplicates = 0;
+            int duplicates = 0;
 
-        ArrayList<Task> tasksHistory = (ArrayList<Task>) taskManager.getHistory();
+            ArrayList<Task> tasksHistory = (ArrayList<Task>) taskManager.getHistory();
 
-        int iteration = 1;
+            int iteration = 1;
 
-        for (Task task : tasksHistory) {
-            int taskId = task.getIdentificationNumber();
+            for (Task task : tasksHistory) {
+                int taskId = task.getIdentificationNumber();
 
-            for (int i = iteration; i < tasksHistory.size(); i++) {
-                if (taskId == tasksHistory.get(i).getIdentificationNumber()) {
-                    duplicates++;
+                for (int i = iteration; i < tasksHistory.size(); i++) {
+                    if (taskId == tasksHistory.get(i).getIdentificationNumber()) {
+                        duplicates++;
+                    }
                 }
+
+                iteration += 1;
             }
 
-            iteration += 1;
+            assertEquals(0, duplicates);
+        } catch (NotFoundException ex) {
+            System.out.println(ex);
         }
-
-        assertEquals(0, duplicates);
     }
 
     @Test

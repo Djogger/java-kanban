@@ -1,5 +1,8 @@
 package manager;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import exceptions.NotFoundException;
 import task.*;
 
 import java.io.*;
@@ -40,6 +43,16 @@ public class FileBackedTaskManager<T extends Task> extends InMemoryTaskManager<T
         taskManager.createAndAddSubtask(subtask1);
         taskManager.createAndAddSubtask(subtask2);
         taskManager.createAndAddSubtask(subtask3);
+
+        try {
+            taskManager.getTask(1);
+            taskManager.getSubtask(5);
+            taskManager.getEpic(3);
+        } catch (NotFoundException ex) {
+            System.out.println(ex);
+        }
+
+        System.out.println(taskManager.getHistory());
 
 //        FileBackedTaskManager<Task> taskManager = loadFromFile(new File("src/file.txt"));
 
@@ -88,6 +101,13 @@ public class FileBackedTaskManager<T extends Task> extends InMemoryTaskManager<T
         for (Task task : prioritizedTasksList) {
             System.out.println("task = " + task);
         }
+
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+                .registerTypeAdapter(Duration.class, new DurationAdapter())
+                .create();
+
+        System.out.println(gson.toJson(task1));
     }
 
     public FileBackedTaskManager(String filePath) {
